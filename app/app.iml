@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module external.linked.project.id=":app" external.linked.project.path="$MODULE_DIR$" external.root.project.path="$MODULE_DIR$/.." external.system.id="GRADLE" type="JAVA_MODULE" version="4">
+<module external.linked.project.id=":app" external.linked.project.path="$MODULE_DIR$" external.root.project.path="$MODULE_DIR$" external.system.id="GRADLE" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="android-gradle" name="Android-Gradle">
       <configuration>
@@ -25,7 +25,7 @@
       </configuration>
     </facet>
     <facet type="kotlin-language" name="Kotlin">
-      <configuration version="3" platform="JVM 1.6" allPlatforms="JVM [1.6]" useProjectSettings="false" pureKotlinSourceFolders="C:\Users\L31105.NYPSIT.000\Desktop\new fypj\app\src\debug\kotlin;C:\Users\L31105.NYPSIT.000\Desktop\new fypj\app\src\debug\java;C:\Users\L31105.NYPSIT.000\Desktop\new fypj\app\src\release\kotlin;C:\Users\L31105.NYPSIT.000\Desktop\new fypj\app\src\release\java;C:\Users\L31105.NYPSIT.000\Desktop\new fypj\app\src\debugAndroidTest\kotlin;C:\Users\L31105.NYPSIT.000\Desktop\new fypj\app\src\debugUnitTest\kotlin;C:\Users\L31105.NYPSIT.000\Desktop\new fypj\app\src\releaseUnitTest\kotlin">
+      <configuration version="3" platform="JVM 1.6" allPlatforms="JVM [1.6]" useProjectSettings="false" pureKotlinSourceFolders="C:\Users\L31105.NYPSIT.000\Desktop\gitfypj\newFypj\app\src\debug\kotlin;C:\Users\L31105.NYPSIT.000\Desktop\gitfypj\newFypj\app\src\debug\java;C:\Users\L31105.NYPSIT.000\Desktop\gitfypj\newFypj\app\src\release\kotlin;C:\Users\L31105.NYPSIT.000\Desktop\gitfypj\newFypj\app\src\release\java;C:\Users\L31105.NYPSIT.000\Desktop\gitfypj\newFypj\app\src\debugAndroidTest\kotlin;C:\Users\L31105.NYPSIT.000\Desktop\gitfypj\newFypj\app\src\debugUnitTest\kotlin;C:\Users\L31105.NYPSIT.000\Desktop\gitfypj\newFypj\app\src\releaseUnitTest\kotlin">
         <compilerSettings>
           <option name="additionalArguments" value="-Xallow-no-source-files" />
         </compilerSettings>
