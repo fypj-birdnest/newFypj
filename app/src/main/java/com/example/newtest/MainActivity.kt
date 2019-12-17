@@ -1,6 +1,7 @@
 package com.example.newtest
 
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -92,12 +93,12 @@ class MainActivity : AppCompatActivity(),ResultHandler {
         var check:Boolean? = false
         val result = p0?.text
 
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Result")
-        builder.setPositiveButton("OK") {dialog, which ->
-            scannerView?.resumeCameraPreview(this@MainActivity)
-            startActivity(intent)
-        }
+//        val builder = AlertDialog.Builder(this)
+//        builder.setTitle("Result")
+//        builder.setPositiveButton("OK") {dialog, which ->
+//            scannerView?.resumeCameraPreview(this@MainActivity)
+//            startActivity(intent)
+//        }
 
 
 
@@ -125,25 +126,22 @@ class MainActivity : AppCompatActivity(),ResultHandler {
 
             }
             fun trueQr(){
-                tmsg = "The QR Code exist in database"
-                builder.setMessage(tmsg)
-                val alert = builder.create()
-                alert.show()
+//                tmsg = "The QR Code exist in database"
+//                builder.setMessage(tmsg)
+//                val alert = builder.create()
+//                alert.show()
+                //intent to go to next page
+                val intent = Intent(this@MainActivity, Results::class.java)
+                startActivity(intent)
             }
+
             fun falseQr(){
-                tmsg = "The QR Code is fake"
-                builder.setMessage(tmsg)
-                val alert = builder.create()
-                alert.show()
+//                tmsg = "The QR Code is fake"
+//                builder.setMessage(tmsg)
+//                val alert = builder.create()
+//                alert.show()
             }
         })
-
-
-
-
-
-
-
 
     }
 }
