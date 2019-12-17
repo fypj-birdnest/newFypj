@@ -2,6 +2,7 @@ package com.example.newtest
 
 import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.Camera
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Vibrator
@@ -14,13 +15,23 @@ import com.example.newtest.Class.QrString
 
 import com.example.newtest.Class.User
 import com.google.firebase.database.*
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.functions.FirebaseFunctions
+import com.google.firebase.functions.FirebaseFunctionsException
 import com.google.zxing.Result
 import me.dm7.barcodescanner.zxing.ZXingScannerView
 import me.dm7.barcodescanner.zxing.ZXingScannerView.ResultHandler
+import android.widget.Toast
+
+
+
+
+
 
 
 
 class MainActivity : AppCompatActivity(),ResultHandler {
+
     private val REQUEST_CAMERA = 1
     private var scannerView :ZXingScannerView? = null
     lateinit var ref : DatabaseReference
@@ -34,24 +45,34 @@ class MainActivity : AppCompatActivity(),ResultHandler {
 
         scannerView = ZXingScannerView(this)
         setContentView(scannerView)
+        scannerView?.resumeCameraPreview(this)
 
+        val db = FirebaseFirestore.getInstance()
+        val firefunc = FirebaseFunctions.getInstance()
 
-        // this is the code for reading data
-        val ref = FirebaseDatabase.getInstance().getReference("qr")
-        ref.addValueEventListener(object:ValueEventListener{
-            override fun onCancelled(p0: DatabaseError) {
-                Log.d("failed","dead")
+        db.collection("qr").get().addOnSuccessListener { result ->
+            for (document in result) {
+                Log.d("theResult", "${document.id} => ${document.data}")
             }
+                }.addOnFailureListener { exception ->
+            Log.w("GetDocError", "Error getting documents.", exception)
+        }
 
-            override fun onDataChange(p0: DataSnapshot) {
-                if(p0!!.exists()){
-                    for(h in p0.children){
-                        val hero = h.getValue(QrString::class.java)?.tvalue
-                        Log.d("test hero", "$hero")
+        firefunc.getHttpsCallable("brandState").call()
+                .addOnCompleteListener { task ->
+                    if (!task.isSuccessful)
+                    {//hello world
+                        val e = task.exception
+                        if (e is FirebaseFunctionsException)
+                        {
+                            Log.d("error in calling func", "Result3: " + e.code + e.details)
+                        }
                     }
+                    return@addOnCompleteListener
                 }
-            }
-        })
+
+
+
 
 
         if(!checkPermission())
@@ -84,6 +105,14 @@ class MainActivity : AppCompatActivity(),ResultHandler {
 
     override fun onDestroy() {
         super.onDestroy()
+//        if(Camera!=null){
+//            camera.stopPreview();
+//            camera.setPreviewCallback(null);
+//
+//            camera.release();
+//            camera = null;
+//        }
+        scannerView?.removeAllViews()
         scannerView?.stopCamera()
     }
 
@@ -99,47 +128,59 @@ class MainActivity : AppCompatActivity(),ResultHandler {
             startActivity(intent)
         }
 
-
-
-        val ref = FirebaseDatabase.getInstance().getReference("qr")
-        ref.addValueEventListener(object:ValueEventListener{
-            override fun onCancelled(p0: DatabaseError) {
-                Log.d("failed","dead")
-            }
-
-            override fun onDataChange(p1: DataSnapshot) {
-                if(p1!!.exists()){
-                    for(h in p1.children){
-                        val hero = h.getValue(QrString::class.java)?.tvalue
-                        Log.d("test hero", "$hero")
-                        if(result == hero){
-                            check = true
-                        }
-                    }
-                }
-                if(check == true){
-                    trueQr()
-                }else{
-                    falseQr()
-                }
-
-            }
-            fun trueQr(){
-                tmsg = "The QR Code exist in database"
-                builder.setMessage(tmsg)
-                val alert = builder.create()
-                alert.show()
-            }
-            fun falseQr(){
-                tmsg = "The QR Code is fake"
-                builder.setMessage(tmsg)
-                val alert = builder.create()
-                alert.show()
-            }
-        })
+        scannerView?.resumeCameraPreview(this)
 
 
 
+//        val ref = FirebaseDatabase.getInstance().getReference("qr")
+//        ref.addValueEventListener(object:ValueEventListener{
+//            override fun onCancelled(p0: DatabaseError) {
+//                Log.d("failed","dead")
+//            }
+//
+//            override fun onDataChange(p1: DataSnapshot) {
+//                if(p1!!.exists()){
+//                    for(h in p1.children){
+//                        val hero = h.getValue(QrString::class.java)?.tvalue
+//                        Log.d("test hero", "$hero")
+//                        if(result == hero){
+//                            check = true
+//                        }
+//                    }
+//                }
+//                if(check == true){
+//                    trueQr()
+//                }else{
+//                    falseQr()
+//                }
+//
+//            }
+//            fun trueQr(){
+//                tmsg = "The QR Code exist in database"
+//                builder.setMessage(tmsg)
+//                val alert = builder.create()
+//                alert.show()
+//            }
+//            fun falseQr(){
+//                tmsg = "The QR Code is fake"
+//                builder.setMessage(tmsg)
+//                val alert = builder.create()
+//                alert.show()
+//            }
+//        })
+
+//        val db = FirebaseFirestore.getInstance()
+//
+//        db.collection("qr")
+//                .get()
+//                .addOnSuccessListener { result ->
+//                    for (document in result) {
+//                        Log.d("theResult", "${document.id} => ${document.data}")
+//                    }
+//                }
+//                .addOnFailureListener { exception ->
+//                    Log.w("GetDocError", "Error getting documents.", exception)
+//                }
 
 
 
