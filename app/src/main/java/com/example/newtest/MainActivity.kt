@@ -1,6 +1,7 @@
 package com.example.newtest
 
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Camera
 import androidx.appcompat.app.AppCompatActivity
@@ -121,47 +122,49 @@ class MainActivity : AppCompatActivity(),ResultHandler {
         var check:Boolean? = false
         val result = p0?.text
 
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Result")
-        builder.setPositiveButton("OK") {dialog, which ->
-            scannerView?.resumeCameraPreview(this@MainActivity)
-            startActivity(intent)
-        }
-
-        scannerView?.resumeCameraPreview(this)
+//        val builder = AlertDialog.Builder(this)
+//        builder.setTitle("Result")
+//        builder.setPositiveButton("OK") {dialog, which ->
+//            scannerView?.resumeCameraPreview(this@MainActivity)
+//            startActivity(intent)
+//        }
 
 
 
-//        val ref = FirebaseDatabase.getInstance().getReference("qr")
-//        ref.addValueEventListener(object:ValueEventListener{
-//            override fun onCancelled(p0: DatabaseError) {
-//                Log.d("failed","dead")
-//            }
-//
-//            override fun onDataChange(p1: DataSnapshot) {
-//                if(p1!!.exists()){
-//                    for(h in p1.children){
-//                        val hero = h.getValue(QrString::class.java)?.tvalue
-//                        Log.d("test hero", "$hero")
-//                        if(result == hero){
-//                            check = true
-//                        }
-//                    }
-//                }
-//                if(check == true){
-//                    trueQr()
-//                }else{
-//                    falseQr()
-//                }
-//
-//            }
-//            fun trueQr(){
+        val ref = FirebaseDatabase.getInstance().getReference("qr")
+        ref.addValueEventListener(object:ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                Log.d("failed","dead")
+            }
+
+            override fun onDataChange(p1: DataSnapshot) {
+                if(p1!!.exists()){
+                    for(h in p1.children){
+                        val hero = h.getValue(QrString::class.java)?.tvalue
+                        Log.d("test hero", "$hero")
+                        if(result == hero){
+                            check = true
+                        }
+                    }
+                }
+                if(check == true){
+                    trueQr()
+                }else{
+                    falseQr()
+                }
+
+            }
+            fun trueQr(){
 //                tmsg = "The QR Code exist in database"
 //                builder.setMessage(tmsg)
 //                val alert = builder.create()
 //                alert.show()
-//            }
-//            fun falseQr(){
+                //intent to go to next page
+                val intent = Intent(this@MainActivity, Results::class.java)
+                startActivity(intent)
+            }
+
+            fun falseQr(){
 //                tmsg = "The QR Code is fake"
 //                builder.setMessage(tmsg)
 //                val alert = builder.create()
